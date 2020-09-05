@@ -33,7 +33,7 @@ object CSVReader {
     val spark:SparkSession = SparkSession.builder().master("local[4]").appName("demo").getOrCreate()
 
     val sc = spark.sparkContext
-    sc.setCheckpointDir("E:\\checkpointing")
+   // sc.setCheckpointDir("E:\\checkpointing")
 
 
     //  import spark.sqlContext.implicits._

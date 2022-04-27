@@ -53,7 +53,7 @@ object CSVReader {
 
     dfsamplecsv.write.mode("overwrite").parquet("src/main/resources/output/")
 
-    //createOrReplaceTempView: The lifetime of this temporary view is tied to the [[SparkSession]] that was used to create this Dataset.
+    //createOrReplaceTempView: The lifetime      bvnof this temporary view is tied to the [[SparkSession]] that was used to create this Dataset.
     //createGlobalTempView: The lifetime of this temporary view is tied to this Spark application.
 
     println("createorReplaceTempView")

@@ -1,7 +1,8 @@
 package com.code.scala
-
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+import org.apache.spark.sql.functions._
+import com.databricks.spark.xml
 
 object Sample {
   def main(args: Array[String]): Unit = {
@@ -9,23 +10,33 @@ object Sample {
 
     val spark: SparkSession = SparkSession.builder().master("local[4]").appName("demo").getOrCreate()
     val sc = spark.sparkContext
-    sc.setLogLevel("WARN")
+    sc.setLogLevel("OFF")
 
-    val schema = StructType(Array(StructField("custnum", IntegerType, nullable=true),StructField("ordernum", IntegerType, nullable=true),StructField("email", StringType, nullable=true),StructField("fname", StringType, nullable=true),
-      StructField("lname", StringType, nullable=true),StructField("title", StringType, nullable=true),StructField("company", StringType, nullable=true),StructField("address", StringType, nullable=true),StructField("city", StringType, nullable=true),
-      StructField("state", StringType, nullable=true),StructField("zip", StringType, nullable=true),StructField("country", StringType, nullable=true),StructField("phone", StringType, nullable=true),StructField("brand", StringType, nullable=true)))
+    val schema = StructType(Array(StructField("custnum", StringType, nullable = true), StructField("ordernum", IntegerType, nullable = true), StructField("email", StringType, nullable = true), StructField("fname", StringType, nullable = true),
+      StructField("lname", StringType, nullable = true), StructField("title", StringType, nullable = true), StructField("company", StringType, nullable = true), StructField("address", StringType, nullable = true), StructField("city", StringType, nullable = true),
+      StructField("state", StringType, nullable = true), StructField("zip", StringType, nullable = true), StructField("country", StringType, nullable = true), StructField("phone", StringType, nullable = true), StructField("brand", StringType, nullable = true)))
 
-    val df=spark.read.format("csv")
-      .option("header","true")
+    val df = spark.read.format("csv")
+      .option("header", "false")
       .schema(schema)
       .load("src/main/resources/subscribers2.csv")
 
 
-    print(df.count())
+    import org.apache.hadoop.conf.Configuration
+    import org.apache.hadoop.fs.{FileSystem, FileUtil, Path}
 
-    df.printSchema()
+//    df.write.format("com.databricks.spark.xml")
+//      .option("rootTag", "items")
+//      .option("rowTag", "item")
+//      .save("src/main/resources/xml")
 
 
+    df.write.format("com.databricks.spark.xml")
+      .option("rootTag", "items")
+      .option("rowTag", "item")
+      .option("nullValue","0")
+      .mode("overwrite")
+      .save("src/main/resources/xml")
   }
 
 }

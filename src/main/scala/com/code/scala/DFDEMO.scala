@@ -32,11 +32,11 @@ object DFDEMO {
 
   val spark:SparkSession = SparkSession.builder().master("local[4]").appName("demo").getOrCreate()
   val sc = spark.sparkContext
-  log.info("begin spark applciation")
+  log.info("begin spark applIciation")
   
 //  import spark.sqlContext.implicits._
   
-  sc.setLogLevel("INFO")
+  sc.setLogLevel("OFF")
   
  val sample=Seq(Row("ahmed", 100,5000), Row("mike", 200,5000), Row("john", 300,15000), Row("nick", 400,10000), Row("michael", 500,15000))
  val samplerdd=sc.parallelize(sample)

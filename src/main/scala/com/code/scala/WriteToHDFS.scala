@@ -4,7 +4,7 @@ import org.apache.log4j.Logger
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
-object WriteToHDFS {
+class WriteToHDFS {
   val logger = Logger.getLogger(this.getClass)
 
 

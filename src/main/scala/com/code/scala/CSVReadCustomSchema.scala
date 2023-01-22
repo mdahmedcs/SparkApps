@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-object CSVReader {
+object CSVReadCustomSchema {
 
   def main(args: Array[String]): Unit = {
 
